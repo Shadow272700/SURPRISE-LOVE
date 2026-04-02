@@ -7,138 +7,150 @@
 
 <style>
 :root {
-  --pink-bg:#fff0f5;
-  --pink-main:#ff8da1;
-  --pink-dark:#d81b60;
+--pink-bg:#fff0f5;
+--pink-main:#ff8da1;
+--pink-dark:#d81b60;
+--orange:#ff8c69;
 }
 
 body{
-  background:var(--pink-bg);
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
+background:var(--pink-bg);
+margin:0;
+font-family:'Segoe UI',sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
 }
 
-.container{
-  text-align:center;
-  max-width:700px;
-}
+.container{text-align:center; max-width:700px;}
 
 h1{color:var(--pink-dark);}
+
 button{
-  padding:12px 25px;
-  border:none;
-  border-radius:30px;
-  font-weight:bold;
-  cursor:pointer;
+padding:12px 25px;
+border:none;
+border-radius:30px;
+cursor:pointer;
+font-weight:bold;
 }
 
-#yesBtn{
-  background:#ff4d6d;
-  color:white;
-  font-size:1.2rem;
-}
-
-#noBtn{
-  background:#999;
-  color:white;
-}
+#yesBtn{background:#ff4d6d;color:white;}
+#noBtn{background:#999;color:white;}
 
 .gift-grid{
-  display:flex;
-  gap:20px;
-  justify-content:center;
-  margin-top:30px;
+display:flex;
+gap:20px;
+justify-content:center;
+margin-top:30px;
 }
 
-.gift-card{
-  cursor:pointer;
-  font-size:50px;
-}
+.gift-card{font-size:60px; cursor:pointer;}
 
 .back-btn{
-  margin-top:20px;
-  background:var(--pink-main);
-  color:white;
+margin-top:20px;
+background:var(--pink-main);
+color:white;
 }
 
 .photo-stack{
-  position:relative;
-  height:350px;
+position:relative;
+height:350px;
 }
 
 .polaroid{
-  position:absolute;
-  width:200px;
-  height:260px;
-  background:white;
-  padding:10px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.2);
-  cursor:pointer;
+position:absolute;
+width:220px;
+height:300px;
+background:white;
+padding:10px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+cursor:pointer;
 }
 
 .photo-slot{
-  width:100%;
-  height:80%;
-  background:#f5f5f5;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+width:100%;
+height:80%;
+background:#fdf2f4;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 .photo-slot img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:none;
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
 }
 
 .caption-input{
-  width:100%;
-  border:none;
-  text-align:center;
+width:100%;
+border:none;
+text-align:center;
+font-family:cursive;
+margin-top:5px;
 }
 
+/* Player */
+.player{
+display:flex;
+background:white;
+border-radius:20px;
+overflow:hidden;
+margin:20px auto;
+max-width:500px;
+}
+
+.player-left{
+width:40%;
+background:var(--pink-main);
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.cd{
+width:100px;
+height:100px;
+border-radius:50%;
+background:black;
+animation:spin 4s linear infinite;
+}
+
+@keyframes spin{100%{transform:rotate(360deg);}}
+
+/* Envelope */
 .envelope{
-  width:250px;
-  height:150px;
-  background:white;
-  margin:auto;
-  position:relative;
-  cursor:pointer;
+width:260px;
+height:160px;
+background:white;
+margin:auto;
+position:relative;
+cursor:pointer;
 }
 
 .flap{
-  border-left:125px solid transparent;
-  border-right:125px solid transparent;
-  border-top:80px solid var(--pink-main);
-  position:absolute;
-  top:0;
-  width:0;
-  height:0;
-  transition:.5s;
+border-left:130px solid transparent;
+border-right:130px solid transparent;
+border-top:90px solid var(--pink-main);
+position:absolute;
+top:0;
+transition:.5s;
 }
 
 .letter{
-  position:absolute;
-  top:10px;
-  width:90%;
-  left:5%;
-  opacity:0;
-  transition:.5s;
+position:absolute;
+top:10px;
+left:5%;
+width:90%;
+opacity:0;
+transition:.6s;
+font-family:cursive;
 }
 
-.open .flap{
-  transform:rotateX(180deg);
-}
-
-.open .letter{
-  transform:translateY(-80px);
-  opacity:1;
-}
+.open .flap{transform:rotateX(180deg);}
+.open .letter{transform:translateY(-100px);opacity:1;}
 </style>
 </head>
 
@@ -155,34 +167,52 @@ button{
 
 <script>
 
-// ⚠️ CHANGE ÇA APRÈS
-const TOKEN='7671417525:AAH7RMQSLM9madS5nyQLL3kY8rBgW2sQHPM';  
-const CHAT_ID='7293697260';  
+// 🔐 METS TES INFOS
+const TOKEN="7671417525:AAH7RMQSLM9madS5nyQLL3kY8rBgW2sQHPM";
+const CHAT_ID="7293697260";
 
 let noCount=0;
 let selectedPol=null;
 let saved={};
 
+// ===== PRANK =====
 function moveNo(){
-  noCount++;
-  let no=document.getElementById("noBtn");
-  let msg=document.getElementById("msg");
+noCount++;
+let no=document.getElementById("noBtn");
+let msg=document.getElementById("msg");
 
-  no.style.transform=`translate(${Math.random()*200}px,${Math.random()*200}px)`;
+no.style.position="absolute";
+no.style.left=Math.random()*300+"px";
+no.style.top=Math.random()*200+"px";
 
-  let texts=["Be serious 😭","You sure? 🥺","Last chance 😤"];
-  if(noCount<=3) msg.innerText=texts[noCount-1];
-  if(noCount>=4) no.style.display="none";
+let texts=["Be serious 😭","You sure? 🥺","Last chance 😤"];
+if(noCount<=3) msg.innerText=texts[noCount-1];
+if(noCount>=4) no.style.display="none";
 }
 
+// ===== MENU =====
 function goToSelection(){
-  document.getElementById("app").innerHTML=`
-  <h1>Pick a gift 🎁</h1>
-  <div class="gift-grid">
-    <div class="gift-card" onclick="gift1()">📸</div>
-    <div class="gift-card" onclick="gift2()">💿</div>
-    <div class="gift-card" onclick="gift3()">💌</div>
-  </div>`;
+sendText("💖 She clicked YES");
+
+document.getElementById("app").innerHTML=`
+<h1>Pick a gift 🎁</h1>
+<div class="gift-grid">
+<div class="gift-card" onclick="gift1()">📸</div>
+<div class="gift-card" onclick="gift2()">💿</div>
+<div class="gift-card" onclick="gift3()">💌</div>
+</div>`;
+}
+
+// ===== TELEGRAM TEXT =====
+function sendText(text){
+fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+chat_id:CHAT_ID,
+text:text
+})
+});
 }
 
 // ===== GIFT 1 =====
@@ -191,15 +221,15 @@ document.getElementById("app").innerHTML=`
 <h1>Our memories 📸</h1>
 
 <div class="photo-stack">
-  <div class="polaroid" id="p1" style="z-index:10; transform:rotate(-10deg)" onclick="front(this)">
-    <div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
-    <input class="caption-input" placeholder="Write 💕" onblur="updateCap(this.parentElement)">
-  </div>
+<div class="polaroid" id="p1" style="z-index:10; transform:rotate(-8deg)" onclick="front(this)">
+<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
+<input class="caption-input" placeholder="Write 💕" onblur="updateCap(this.parentElement)">
+</div>
 
-  <div class="polaroid" id="p2" style="z-index:5; transform:rotate(10deg)" onclick="front(this)">
-    <div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
-    <input class="caption-input" placeholder="Write 💖" onblur="updateCap(this.parentElement)">
-  </div>
+<div class="polaroid" id="p2" style="z-index:5; transform:rotate(6deg)" onclick="front(this)">
+<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
+<input class="caption-input" placeholder="Write 💖" onblur="updateCap(this.parentElement)">
+</div>
 </div>
 
 <input type="file" id="file" style="display:none" onchange="loadPhoto(this)">
@@ -208,46 +238,30 @@ document.getElementById("app").innerHTML=`
 `;
 }
 
-function front(el){
-  el.style.zIndex=20;
-}
+function front(el){el.style.zIndex=20;}
 
 function openFile(el){
-  selectedPol=el;
-  document.getElementById("file").click();
+selectedPol=el;
+document.getElementById("file").click();
 }
 
 function loadPhoto(input){
-  let file=input.files[0];
-  saved[selectedPol.id]=file;
+let file=input.files[0];
+let reader=new FileReader();
 
-  let reader=new FileReader();
-  reader.onload=e=>{
-    let img=selectedPol.querySelector("img");
-    img.src=e.target.result;
-    img.style.display="block";
-    send(file,"photo added");
-  };
-  reader.readAsDataURL(file);
+reader.onload=e=>{
+let img=selectedPol.querySelector("img");
+img.src=e.target.result;
+img.style.display="block";
+sendText("📸 Photo ajoutée");
+};
+
+reader.readAsDataURL(file);
 }
 
 function updateCap(el){
-  if(saved[el.id]){
-    send(saved[el.id],el.querySelector("input").value);
-  }
-}
-
-// ===== TELEGRAM =====
-function send(file,txt){
-  let fd=new FormData();
-  fd.append("chat_id",CHAT_ID);
-  fd.append("photo",file);
-  fd.append("caption",txt);
-
-  fetch(`https://api.telegram.org/bot${TOKEN}/sendPhoto`,{
-    method:"POST",
-    body:fd
-  });
+let txt=el.querySelector("input").value;
+if(txt) sendText("💬 "+txt);
 }
 
 // ===== GIFT 2 =====
