@@ -218,23 +218,29 @@ text:text
 // ===== GIFT 1 =====
 function gift1(){
 document.getElementById("app").innerHTML=`
-<h1>Our memories 📸</h1>
+<h1 style="font-family:cursive;">Capture our memories</h1>
 
 <div class="photo-stack">
-<div class="polaroid" id="p1" style="z-index:10; transform:rotate(-8deg)" onclick="front(this)">
-<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
-<input class="caption-input" placeholder="Write 💕" onblur="updateCap(this.parentElement)">
+
+<div class="polaroid" id="p1" style="z-index:10; transform:rotate(-8deg) translateX(-35px);" onclick="bringFront(this)">
+  <div class="photo-slot">
+    <input type="file" accept="image/*" onchange="loadPhoto(event, 'p1')">
+    <img id="img_p1">
+  </div>
+  <input type="text" class="caption-input" placeholder="Type here..." oninput="updateCapLive('p1', this.value)">
 </div>
 
-<div class="polaroid" id="p2" style="z-index:5; transform:rotate(6deg)" onclick="front(this)">
-<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
-<input class="caption-input" placeholder="Write 💖" onblur="updateCap(this.parentElement)">
-</div>
+<div class="polaroid" id="p2" style="z-index:20; transform:rotate(6deg) translateX(35px);" onclick="bringFront(this)">
+  <div class="photo-slot">
+    <input type="file" accept="image/*" onchange="loadPhoto(event, 'p2')">
+    <img id="img_p2">
+  </div>
+  <input type="text" class="caption-input" placeholder="Type here..." oninput="updateCapLive('p2', this.value)">
 </div>
 
-<input type="file" id="file" style="display:none" onchange="loadPhoto(this)">
+</div>
 
-<button class="back-btn" onclick="goToSelection()">⬅ Back</button>
+<button class="back-btn" onclick="goToSelection()">⬅ Go Back</button>
 `;
 }
 
