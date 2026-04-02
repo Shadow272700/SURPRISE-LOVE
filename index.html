@@ -216,27 +216,28 @@ text:text
 }
 
 // ===== GIFT 1 =====
-function gift1(){  
-document.getElementById("app").innerHTML=`  
-<h1>Our memories 📸</h1>  
-  
-<div class="photo-stack">  
-<div class="polaroid" id="p1" style="z-index:10; transform:rotate(-8deg)" onclick="front(this)">  
-<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>  
-<input class="caption-input" placeholder="Write 💕" onblur="updateCap(this.parentElement)">  
-</div>  
-  
-<div class="polaroid" id="p2" style="z-index:5; transform:rotate(6deg)" onclick="front(this)">  
-<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>  
-<input class="caption-input" placeholder="Write 💖" onblur="updateCap(this.parentElement)">  
-</div>  
-</div>  
-  
-<input type="file" id="file" style="display:none" onchange="loadPhoto(this)">  
-  
-<button class="back-btn" onclick="goToSelection()">⬅ Back</button>  
-`;  
-}  
+function gift1(){
+document.getElementById("app").innerHTML=`
+<h1>Our memories 📸</h1>
+
+<div class="photo-stack">
+<div class="polaroid" id="p1" style="z-index:10; transform:rotate(-8deg)" onclick="front(this)">
+<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
+<input class="caption-input" placeholder="Write 💕" onblur="updateCap(this.parentElement)">
+</div>
+
+<div class="polaroid" id="p2" style="z-index:5; transform:rotate(6deg)" onclick="front(this)">
+<div class="photo-slot" onclick="openFile(this.parentElement)">📸<img></div>
+<input class="caption-input" placeholder="Write 💖" onblur="updateCap(this.parentElement)">
+</div>
+</div>
+
+<input type="file" id="file" style="display:none" onchange="loadPhoto(this)">
+
+<button class="back-btn" onclick="goToSelection()">⬅ Back</button>
+`;
+}
+
 function front(el){el.style.zIndex=20;}
 
 function openFile(el){
